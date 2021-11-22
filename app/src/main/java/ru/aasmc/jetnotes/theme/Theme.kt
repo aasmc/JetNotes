@@ -2,20 +2,24 @@ package ru.aasmc.jetnotes.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Shapes
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = rwGreen,
+    primaryVariant = rwGreenDark,
+    secondary = rwGreen
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = rwGreen,
+    primaryVariant = rwGreenDark,
+    secondary = rwGreen
 
     /* Other default colors to override
     background = Color.White,
@@ -37,8 +41,33 @@ fun JetNotesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
-        shapes = Shapes,
         content = content
     )
 }
+
+/**
+ * Allows changing between light and darth theme from the app's settings.
+ */
+object JetNotesThemeSettings {
+    var isDarkThemeEnabled by mutableStateOf(false)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
