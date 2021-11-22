@@ -1,5 +1,7 @@
 package ru.aasmc.jetnotes.domain.model
 
+import ru.aasmc.jetnotes.data.database.model.ColorDbModel
+
 data class ColorModel(
     val id: Long,
     val name: String,
