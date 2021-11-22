@@ -17,7 +17,7 @@ Tapping the navigation icon on the app bar or swiping from the left border of th
 In the Trash screen, the user can switch between regular and checkable notes using two tabs. The user can select notes and restore them or delete them permanently.
 
 
-#Copyright
+# Copyright
 ```text
 /*
  * Copyright (c) 2021 Razeware LLC

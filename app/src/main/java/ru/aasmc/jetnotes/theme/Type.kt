@@ -1,4 +1,4 @@
-package ru.aasmc.jetnotes.ui.theme
+package ru.aasmc.jetnotes.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
