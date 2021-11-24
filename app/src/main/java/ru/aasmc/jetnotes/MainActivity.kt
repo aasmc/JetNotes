@@ -14,6 +14,7 @@ import ru.aasmc.jetnotes.routing.Screen
 import ru.aasmc.jetnotes.theme.JetNotesTheme
 import ru.aasmc.jetnotes.ui.components.AppDrawer
 import ru.aasmc.jetnotes.ui.components.Note
+import ru.aasmc.jetnotes.ui.screens.NotesScreen
 import ru.aasmc.jetnotes.viewmodel.MainViewModel
 import ru.aasmc.jetnotes.viewmodel.MainViewModelFactory
 
@@ -33,26 +34,31 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             JetNotesTheme {
-                val coroutineScope = rememberCoroutineScope()
-                val scaffoldState: ScaffoldState = rememberScaffoldState()
-
-                Scaffold(
-                    scaffoldState = scaffoldState,
-                    drawerContent = {
-                        AppDrawer(
-                            currentScreen = Screen.Notes,
-                            closeDrawerAction = {
-                                coroutineScope.launch {
-                                    scaffoldState.drawerState.close()
-                                }
-                            }
-                        )
-                    },
-                    content = {
-                        Note()
-                    }
-                )
+                NotesScreen(viewModel = viewModel)
             }
         }
+    }
+
+    @Composable
+    private fun ShowScaffold() {
+        val coroutineScope = rememberCoroutineScope()
+        val scaffoldState: ScaffoldState = rememberScaffoldState()
+
+        Scaffold(
+            scaffoldState = scaffoldState,
+            drawerContent = {
+                AppDrawer(
+                    currentScreen = Screen.Notes,
+                    closeDrawerAction = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.close()
+                        }
+                    }
+                )
+            },
+            content = {
+
+            }
+        )
     }
 }
