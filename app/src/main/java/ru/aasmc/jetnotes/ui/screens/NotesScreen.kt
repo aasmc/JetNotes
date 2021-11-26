@@ -17,6 +17,7 @@ import ru.aasmc.jetnotes.ui.components.AppDrawer
 import ru.aasmc.jetnotes.ui.components.Note
 import ru.aasmc.jetnotes.viewmodel.MainViewModel
 
+@ExperimentalMaterialApi
 @Composable
 fun NotesScreen(
     viewModel: MainViewModel
@@ -92,6 +93,7 @@ fun NotesScreen(
     )
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun NoteList(
     notes: List<NoteModel>,
@@ -111,6 +113,7 @@ private fun NoteList(
     }
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun NoteListPreview() {

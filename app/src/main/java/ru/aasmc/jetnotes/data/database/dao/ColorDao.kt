@@ -1,10 +1,9 @@
 package ru.aasmc.jetnotes.data.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import ru.aasmc.jetnotes.data.database.model.ColorDbModel
+import ru.aasmc.jetnotes.data.database.model.NoteDbModel
 
 @Dao
 interface ColorDao {

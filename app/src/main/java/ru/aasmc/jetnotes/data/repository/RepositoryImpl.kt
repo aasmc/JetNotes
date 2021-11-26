@@ -21,7 +21,7 @@ class RepositoryImpl(
     private val dbMapper: DbMapper
 ) : Repository {
 
-    private val notesNoteInTrashLiveData: MutableLiveData<List<NoteModel>> by lazy {
+    private val notesNotInTrashLiveData: MutableLiveData<List<NoteModel>> by lazy {
         MutableLiveData<List<NoteModel>>()
     }
 
@@ -52,7 +52,7 @@ class RepositoryImpl(
     }
 
 
-    override fun getAllNotesNotInTrash(): LiveData<List<NoteModel>> = notesNoteInTrashLiveData
+    override fun getAllNotesNotInTrash(): LiveData<List<NoteModel>> = notesNotInTrashLiveData
 
     override fun getAllNotesInTrash(): LiveData<List<NoteModel>> = notesInTrashLiveData
 
@@ -119,7 +119,7 @@ class RepositoryImpl(
         dbMapper.mapColor(colorDao.findByIdSync(id))
 
     private fun updateNotesLiveData() {
-        notesNoteInTrashLiveData.postValue(getAllNotesDependingOnTrashStateSync(false))
+        notesNotInTrashLiveData.postValue(getAllNotesDependingOnTrashStateSync(false))
         val newNotesInTrashLiveData = getAllNotesDependingOnTrashStateSync(true)
         notesInTrashLiveData.postValue(newNotesInTrashLiveData)
     }

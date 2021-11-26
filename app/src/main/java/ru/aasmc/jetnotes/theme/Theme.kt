@@ -9,17 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = rwGreen,
-    primaryVariant = rwGreenDark,
-    secondary = rwGreen
+    primary = Color(0xFF00A055),
+    primaryVariant = Color(0xFF00f884),
+    secondary = rwRed,
+    onPrimary = Color.White
 )
 
 private val LightColorPalette = lightColors(
     primary = rwGreen,
     primaryVariant = rwGreenDark,
-    secondary = rwGreen
+    secondary = rwRed
 
     /* Other default colors to override
     background = Color.White,
@@ -32,7 +34,10 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun JetNotesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
+fun JetNotesTheme(
+    darkTheme: Boolean = isSystemInDarkTheme() || JetNotesThemeSettings.isDarkThemeEnabled,
+    content: @Composable() () -> Unit
+) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

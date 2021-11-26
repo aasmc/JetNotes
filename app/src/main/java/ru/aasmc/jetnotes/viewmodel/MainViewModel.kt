@@ -34,8 +34,8 @@ class MainViewModel(
         get() = _selectedNotes
 
     private var _noteEntry = MutableLiveData(NoteModel())
-    val noteEntry: LiveData<NoteModel>
-        get() = _noteEntry
+    val noteEntry: LiveData<NoteModel> = _noteEntry
+
 
     val colors: LiveData<List<ColorModel>> by lazy {
         repository.getAllColors()
