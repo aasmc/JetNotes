@@ -16,6 +16,19 @@ Tapping the navigation icon on the app bar or swiping from the left border of th
 
 In the Trash screen, the user can switch between regular and checkable notes using two tabs. The user can select notes and restore them or delete them permanently.
 
+## Navigation
+Navigation in the app is implemented using custom Router that switches between a predefined set of Screens.
+
+## Data storage
+Data is saved in SQLLite by means of ORM Room.
+
+## App Architecture
+The app uses MVVM and unidirectional data flow to properly handle state with JetPack Compose. 
+
+## DI
+At this stage the app is trivial and doesn't require use of any DI framework, but if I consider to 
+improve the app, then Hilt will be used to provide DI. 
+
 
 # Copyright
 ```text
