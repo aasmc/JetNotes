@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import ru.aasmc.jetnotes.R
 import ru.aasmc.jetnotes.domain.model.ColorModel
 import ru.aasmc.jetnotes.domain.model.NEW_NOTE_ID
@@ -29,12 +31,21 @@ import ru.aasmc.jetnotes.ui.components.NoteColor
 import ru.aasmc.jetnotes.util.fromHex
 import ru.aasmc.jetnotes.viewmodel.MainViewModel
 
+@ExperimentalMaterialApi
 @Composable
 fun SaveNoteScreen(
     viewModel: MainViewModel
 ) {
     val noteEntry: NoteModel by viewModel.noteEntry
         .observeAsState(NoteModel())
+
+    val colors: List<ColorModel> by viewModel.colors
+        .observeAsState(listOf())
+
+    val bottomDrawerState: BottomDrawerState =
+        rememberBottomDrawerState(BottomDrawerValue.Closed)
+
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -48,7 +59,9 @@ fun SaveNoteScreen(
                     viewModel.saveNote(noteEntry)
                 },
                 onOpenColorPickerClick = {
-
+                    coroutineScope.launch {
+                        bottomDrawerState.open()
+                    }
                 },
                 onDeleteNoteClick = {
                     viewModel.moveNoteToTrash(noteEntry)
@@ -56,12 +69,28 @@ fun SaveNoteScreen(
             )
         },
         content = {
-            SaveNoteContent(
-                note = noteEntry,
-                onNoteChange = { updatedNoteEntry ->
-                    viewModel.onNoteEntryChange(updatedNoteEntry)
-                }
-            )
+            BottomDrawer(
+                drawerState = bottomDrawerState,
+                drawerContent = {
+                    ColorPicker(
+                        colors = colors,
+                        onColorSelect = { color ->
+                            val newNoteEntry = noteEntry.copy(color = color)
+                            viewModel.onNoteEntryChange(newNoteEntry)
+                            coroutineScope.launch {
+                                bottomDrawerState.close()
+                            }
+                        }
+                    )
+                },
+                content = {
+                    SaveNoteContent(
+                        note = noteEntry,
+                        onNoteChange = { updatedNoteEntry ->
+                            viewModel.onNoteEntryChange(updatedNoteEntry)
+                        }
+                    )
+                })
         }
     )
 }

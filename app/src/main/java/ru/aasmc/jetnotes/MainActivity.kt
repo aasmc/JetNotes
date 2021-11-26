@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 import ru.aasmc.jetnotes.routing.JetNotesRouter
 import ru.aasmc.jetnotes.routing.Screen
@@ -23,6 +24,7 @@ import ru.aasmc.jetnotes.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
+    @DelicateCoroutinesApi
     private val viewModel: MainViewModel by viewModels(
         factoryProducer = {
             MainViewModelFactory(
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
     )
 
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun MainActivityScreen(
     viewModel: MainViewModel
