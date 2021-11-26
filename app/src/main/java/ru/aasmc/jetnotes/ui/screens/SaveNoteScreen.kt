@@ -21,7 +21,7 @@ import ru.aasmc.jetnotes.ui.components.NoteColor
 import ru.aasmc.jetnotes.util.fromHex
 
 @Composable
-private fun ColorPicker(
+fun ColorPicker(
     colors: List<ColorModel>,
     onColorSelect: (ColorModel) -> Unit
 ) {

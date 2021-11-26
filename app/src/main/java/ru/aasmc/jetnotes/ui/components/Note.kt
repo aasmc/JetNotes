@@ -25,7 +25,8 @@ import ru.aasmc.jetnotes.util.fromHex
 fun Note(
     note: NoteModel,
     onNoteClick: (NoteModel) -> Unit = {},
-    onNoteCheckedChange: (NoteModel) -> Unit = {}
+    onNoteCheckedChange: (NoteModel) -> Unit = {},
+    isSelected: Boolean
 ) {
     val backgroundShape: Shape = RoundedCornerShape(4.dp)
     Row(
@@ -90,7 +91,8 @@ fun Note(
 @Composable
 private fun NotePreviewChecked() {
     Note(
-        note = NoteModel(1L, "Title", "Content", true)
+        note = NoteModel(1L, "Title", "Content", true),
+        isSelected = false
     )
 }
 
@@ -98,6 +100,7 @@ private fun NotePreviewChecked() {
 @Composable
 private fun NotePreviewNotCheckable() {
     Note(
-        note = NoteModel(1L, "Title", "Content", null)
+        note = NoteModel(1L, "Title", "Content", null),
+        isSelected = false
     )
 }
