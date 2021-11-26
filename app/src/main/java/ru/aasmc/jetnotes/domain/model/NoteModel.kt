@@ -1,7 +1,5 @@
 package ru.aasmc.jetnotes.domain.model
 
-import kotlinx.coroutines.CoroutineStart
-
 const val NEW_NOTE_ID = -1L
 
 /**

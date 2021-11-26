@@ -32,13 +32,19 @@ class MainViewModel(
     val selectedNotes: LiveData<List<NoteModel>>
         get() = _selectedNotes
 
+    private var _noteEntry = MutableLiveData(NoteModel())
+    val noteEntry: LiveData<NoteModel>
+        get() = _noteEntry
+
     //<editor-fold desc="Events that the view can pass">
     fun onCreateNewNoteClick() {
+        _noteEntry.value = NoteModel()
         JetNotesRouter.navigateNo(Screen.SaveNote)
     }
 
     fun onNoteClick(note: NoteModel) {
-
+        _noteEntry.value = note
+        JetNotesRouter.navigateNo(Screen.SaveNote)
     }
 
     fun onNoteCheckedChange(note: NoteModel) {
