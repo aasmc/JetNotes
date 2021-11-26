@@ -53,7 +53,7 @@ class MainViewModel(
     }
 
     fun onNoteCheckedChange(note: NoteModel) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             repository.insertNote(note)
         }
     }
@@ -69,7 +69,7 @@ class MainViewModel(
     }
 
     fun restoreNotes(notes: List<NoteModel>) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             repository.restoreNotesFromTrash(notes.map { it.id })
             withContext(Dispatchers.Main) {
                 _selectedNotes.value = listOf()
@@ -78,7 +78,7 @@ class MainViewModel(
     }
 
     fun permanentlyDeleteNotes(notes: List<NoteModel>) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             repository.deleteNotes(notes.map { it.id })
             withContext(Dispatchers.Main) {
                 _selectedNotes.value = listOf()
@@ -91,7 +91,7 @@ class MainViewModel(
     }
 
     fun saveNote(note: NoteModel) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             repository.insertNote(note)
             withContext(Dispatchers.Main) {
                 JetNotesRouter.navigateNo(Screen.Notes)
@@ -102,7 +102,7 @@ class MainViewModel(
     }
 
     fun moveNoteToTrash(note: NoteModel) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             repository.moveNoteToTrash(note.id)
             withContext(Dispatchers.Main) {
                 JetNotesRouter.navigateNo(Screen.Notes)

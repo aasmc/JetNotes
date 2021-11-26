@@ -18,7 +18,7 @@ class DbMapperImpl : DbMapper {
 
     override fun mapNote(noteDbModel: NoteDbModel, colorDbModel: ColorDbModel): NoteModel {
         val color = mapColor(colorDbModel)
-        val isCheckedOff = with(noteDbModel) { if (canBeCheckedOff) isCheckedOff else false }
+        val isCheckedOff = with(noteDbModel) { if (canBeCheckedOff) isCheckedOff else null }
         return with(noteDbModel) { NoteModel(id, title, content, isCheckedOff, color) }
     }
 
