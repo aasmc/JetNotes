@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.aasmc.jetnotes.data.repository.Repository
 import ru.aasmc.jetnotes.domain.model.NoteModel
+import ru.aasmc.jetnotes.routing.JetNotesRouter
+import ru.aasmc.jetnotes.routing.Screen
 
 /**
  * ViewModel used for storing the global app state.
@@ -32,11 +34,11 @@ class MainViewModel(
 
     //<editor-fold desc="Events that the view can pass">
     fun onCreateNewNoteClick() {
-        // TODO
+        JetNotesRouter.navigateNo(Screen.SaveNote)
     }
 
     fun onNoteClick(note: NoteModel) {
-        // TODO
+
     }
 
     fun onNoteCheckedChange(note: NoteModel) {
