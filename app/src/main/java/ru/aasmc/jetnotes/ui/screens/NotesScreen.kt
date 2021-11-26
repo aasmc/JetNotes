@@ -1,14 +1,19 @@
 package ru.aasmc.jetnotes.ui.screens
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.launch
 import ru.aasmc.jetnotes.domain.model.NoteModel
+import ru.aasmc.jetnotes.routing.Screen
+import ru.aasmc.jetnotes.ui.components.AppDrawer
 import ru.aasmc.jetnotes.ui.components.Note
 import ru.aasmc.jetnotes.ui.components.TopAppBar
 import ru.aasmc.jetnotes.viewmodel.MainViewModel
@@ -21,19 +26,60 @@ fun NotesScreen(
         .notesNotInTrash
         .observeAsState(listOf())
 
-    Column {
-        TopAppBar(
-            title = "Jet Notes",
-            icon = Icons.Filled.List,
-            onIconClick = {}
-        )
-        NoteList(
-            notes = notes,
-            onNoteCheckedChange = { viewModel.onNoteCheckedChange(it) },
-            onNoteClick = { viewModel.onNoteClick(it) }
-        )
-    }
+    val scaffoldState: ScaffoldState = rememberScaffoldState()
 
+    val coroutineScope = rememberCoroutineScope()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = "Jet Notes",
+                icon = Icons.Filled.List,
+                onIconClick = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                }
+            )
+        },
+        scaffoldState = scaffoldState,
+        drawerContent = {
+            AppDrawer(
+                currentScreen = Screen.Notes,
+                closeDrawerAction = {
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.close()
+                    }
+                }
+            )
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { viewModel.onCreateNewNoteClick() },
+                contentColor = MaterialTheme.colors.background,
+                content = {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add Note Button"
+                    )
+                }
+            )
+        },
+        content = {
+            if (notes.isNotEmpty()) {
+                NoteList(
+                    notes = notes,
+                    onNoteCheckedChange = {
+                        viewModel.onNoteCheckedChange(it)
+                    },
+                    onNoteClick = {
+                        viewModel.onNoteClick(it)
+                    }
+                )
+            }
+        }
+    )
 }
 
 @Composable
@@ -48,7 +94,8 @@ private fun NoteList(
             Note(
                 note = note,
                 onNoteClick = onNoteClick,
-                onNoteCheckedChange = onNoteCheckedChange
+                onNoteCheckedChange = onNoteCheckedChange,
+                isSelected = false
             )
         }
     }

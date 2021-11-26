@@ -19,6 +19,14 @@ import androidx.compose.ui.unit.sp
 import ru.aasmc.jetnotes.domain.model.ColorModel
 import ru.aasmc.jetnotes.ui.components.NoteColor
 import ru.aasmc.jetnotes.util.fromHex
+import ru.aasmc.jetnotes.viewmodel.MainViewModel
+
+@Composable
+fun SaveNoteScreen(
+    viewModel: MainViewModel
+) {
+
+}
 
 @Composable
 fun ColorPicker(
