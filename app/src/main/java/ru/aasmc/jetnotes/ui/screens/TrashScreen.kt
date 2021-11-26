@@ -178,26 +178,26 @@ private fun Content(
                 )
             }
         }
-    }
 
-    val filteredNotes = when (selectedTab) {
-        0 -> {
-            notes.filter { it.isCheckedOff == null }
+        val filteredNotes = when (selectedTab) {
+            0 -> {
+                notes.filter { it.isCheckedOff == null }
+            }
+            1 -> {
+                notes.filter { it.isCheckedOff != null }
+            }
+            else -> throw IllegalStateException("Tab not supported - index: $selectedTab")
         }
-        1 -> {
-            notes.filter { it.isCheckedOff != null }
-        }
-        else -> throw IllegalStateException("Tab not supported - index: $selectedTab")
-    }
-    LazyColumn {
-        items(count = filteredNotes.size) { noteIndex ->
-            val note = filteredNotes[noteIndex]
-            val isNoteSelected = selectedNotes.contains(note)
-            Note(
-                note = note,
-                isSelected = isNoteSelected,
-                onNoteClick = onNoteClick
-            )
+        LazyColumn {
+            items(count = filteredNotes.size) { noteIndex ->
+                val note = filteredNotes[noteIndex]
+                val isNoteSelected = selectedNotes.contains(note)
+                Note(
+                    note = note,
+                    isSelected = isNoteSelected,
+                    onNoteClick = onNoteClick
+                )
+            }
         }
     }
 }
