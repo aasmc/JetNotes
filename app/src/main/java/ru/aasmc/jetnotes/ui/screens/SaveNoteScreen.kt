@@ -1,5 +1,6 @@
 package ru.aasmc.jetnotes.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -51,6 +52,14 @@ fun SaveNoteScreen(
         rememberSaveable {
             mutableStateOf(false)
         }
+
+    BackHandler(onBack = {
+        if (bottomDrawerState.isOpen) {
+            coroutineScope.launch { bottomDrawerState.close() }
+        } else {
+            JetNotesRouter.navigateNo(Screen.Notes)
+        }
+    })
 
     Scaffold(
         topBar = {
