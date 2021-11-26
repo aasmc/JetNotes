@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.aasmc.jetnotes.data.repository.Repository
+import ru.aasmc.jetnotes.domain.model.ColorModel
 import ru.aasmc.jetnotes.domain.model.NoteModel
 import ru.aasmc.jetnotes.routing.JetNotesRouter
 import ru.aasmc.jetnotes.routing.Screen
@@ -35,6 +36,10 @@ class MainViewModel(
     private var _noteEntry = MutableLiveData(NoteModel())
     val noteEntry: LiveData<NoteModel>
         get() = _noteEntry
+
+    val colors: LiveData<List<ColorModel>> by lazy {
+        repository.getAllColors()
+    }
 
     //<editor-fold desc="Events that the view can pass">
     fun onCreateNewNoteClick() {
@@ -77,6 +82,30 @@ class MainViewModel(
             repository.deleteNotes(notes.map { it.id })
             withContext(Dispatchers.Main) {
                 _selectedNotes.value = listOf()
+            }
+        }
+    }
+
+    fun onNoteEntryChange(note: NoteModel) {
+        _noteEntry.value = note
+    }
+
+    fun saveNote(note: NoteModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertNote(note)
+            withContext(Dispatchers.Main) {
+                JetNotesRouter.navigateNo(Screen.Notes)
+
+                _noteEntry.value = NoteModel()
+            }
+        }
+    }
+
+    fun moveNoteToTrash(note: NoteModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.moveNoteToTrash(note.id)
+            withContext(Dispatchers.Main) {
+                JetNotesRouter.navigateNo(Screen.Notes)
             }
         }
     }
