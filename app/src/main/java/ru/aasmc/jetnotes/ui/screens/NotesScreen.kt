@@ -15,7 +15,6 @@ import ru.aasmc.jetnotes.domain.model.NoteModel
 import ru.aasmc.jetnotes.routing.Screen
 import ru.aasmc.jetnotes.ui.components.AppDrawer
 import ru.aasmc.jetnotes.ui.components.Note
-import ru.aasmc.jetnotes.ui.components.TopAppBar
 import ru.aasmc.jetnotes.viewmodel.MainViewModel
 
 @Composable
@@ -33,11 +32,22 @@ fun NotesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = "Jet Notes",
-                icon = Icons.Filled.List,
-                onIconClick = {
-                    coroutineScope.launch {
-                        scaffoldState.drawerState.open()
+                title = {
+                    Text(
+                        text = "Jet Notes",
+                        color = MaterialTheme.colors.onPrimary
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.open()
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.List,
+                            contentDescription = "Drawer Button"
+                        )
                     }
                 }
             )
